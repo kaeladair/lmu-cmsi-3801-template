@@ -58,6 +58,13 @@ public class Exercises {
     }
 
     // Write your line count function here
+    static long meaningfulLineCount(String filename) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            return reader.lines()
+                    .filter(line -> !line.trim().isEmpty() && !line.trim().startsWith("#"))
+                    .count();
+        }
+    }
 }
 
 // Write your Quaternion record class here
