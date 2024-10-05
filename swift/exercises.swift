@@ -17,7 +17,7 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
 
 // Write your first then lower case function here
 func firstThenLowerCase<T>(of list: [T], satisfying predicate: (T) -> Bool) -> String? {
-    return list.first(where: predicate)?.description.lowercased()
+    return list.first(where: predicate).map { String(describing: $0).lowercased() }
 }
 
 // Write your say function here
