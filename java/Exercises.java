@@ -125,3 +125,52 @@ record Quaternion(double a, double b, double c, double d) {
 }
 
 // Write your BinarySearchTree sealed interface and its implementations here
+sealed interface BinarySearchTree {
+    int size();
+    boolean contains(String value);
+    BinarySearchTree insert(String value);
+    String toString();
+}
+
+final class Empty implements BinarySearchTree {
+    public int size() { return 0; }
+    public boolean contains(String value) { return false; }
+    public BinarySearchTree insert(String value) { return new Node(value, this, this); }
+    public String toString() { return "()"; }
+}
+
+final class Node implements BinarySearchTree {
+    private final String value;
+    private final BinarySearchTree left;
+    private final BinarySearchTree right;
+
+    Node(String value, BinarySearchTree left, BinarySearchTree right) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+
+    public int size() {
+        return 1 + left.size() + right.size();
+    }
+
+    public boolean contains(String value) {
+        int cmp = this.value.compareTo(value);
+        if (cmp == 0) return true;
+        return cmp > 0 ? left.contains(value) : right.contains(value);
+    }
+
+    public BinarySearchTree insert(String value) {
+        int cmp = this.value.compareTo(value);
+        if (cmp == 0) return this;
+        if (cmp > 0) {
+            return new Node(this.value, left.insert(value), right);
+        } else {
+            return new Node(this.value, left, right.insert(value));
+        }
+    }
+
+    public String toString() {
+        return "(" + left + this.value + right + ")";
+    }
+}
