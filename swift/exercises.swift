@@ -22,22 +22,22 @@ func firstThenLowerCase<T>(of list: [T], satisfying predicate: (T) -> Bool) -> S
 
 // Write your say function here
 class Say {
-    private var phrase: String
+    private var _phrase: String
 
     init(_ word: String = "") {
-        self.phrase = word
+        self._phrase = word
     }
 
     func and(_ word: String) -> Say {
-        if !phrase.isEmpty {
-            phrase += " "
+        if !_phrase.isEmpty {
+            _phrase += " "
         }
-        phrase += word
+        _phrase += word
         return self
     }
 
     var phrase: String {
-        return self.phrase
+        return self._phrase
     }
 }
 
