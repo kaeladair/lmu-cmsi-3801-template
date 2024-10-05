@@ -51,10 +51,14 @@ public class Exercises {
         public String phrase() {
             return phrase.toString();
         }
+    }
 
-        public static Say say(String word) {
-            return new Say(word);
-        }
+    public static Say say() {
+        return new Say(null);
+    }
+
+    public static Say say(String word) {
+        return new Say(word);
     }
 
     // Write your line count function here
