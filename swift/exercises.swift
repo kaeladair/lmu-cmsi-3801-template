@@ -29,7 +29,7 @@ class Say {
     }
 
     func and(_ word: String) -> Say {
-        if !_phrase.isEmpty {
+        if !_phrase.isEmpty && !word.isEmpty {
             _phrase += " "
         }
         _phrase += word
@@ -107,12 +107,13 @@ extension Quaternion: CustomStringConvertible {
             (b, "i"),
             (c, "j"),
             (d, "k")
-        ].filter { $0.0 != 0 }
+        ].filter { $0.0 != 0 || $0.1.isEmpty }
         .enumerated()
         .map { index, term in
             let (coeff, unit) = term
             let sign = index == 0 || coeff < 0 ? "" : "+"
-            return "\(sign)\(coeff)\(unit)".replacingOccurrences(of: ".0", with: "")
+            let coeffStr = String(format: "%.1f", coeff).replacingOccurrences(of: ".0", with: "")
+            return "\(sign)\(coeffStr)\(unit)"
         }
         return terms.joined().isEmpty ? "0" : terms.joined()
     }
@@ -158,7 +159,12 @@ extension BinarySearchTree: CustomStringConvertible {
     var description: String {
         switch self {
         case .empty: return "()"
-        case .node(let value, let left, let right): return "(\(left)\(value)\(right))"
+        case .node(let value, let left, let right):
+            if case .empty = left, case .empty = right {
+                return "(\(value))"
+            } else {
+                return "(\(left)\(value)\(right))"
+            }
         }
     }
 }
