@@ -29,7 +29,33 @@ public class Exercises {
     }
 
     // Write your say function here
-    
+    static class Say {
+        private final StringBuilder phrase = new StringBuilder();
+
+        private Say(String word) {
+            if (word != null && !word.isEmpty()) {
+                phrase.append(word);
+            }
+        }
+
+        public Say and(String word) {
+            if (word != null && !word.isEmpty()) {
+                if (phrase.length() > 0) {
+                    phrase.append(" ");
+                }
+                phrase.append(word);
+            }
+            return this;
+        }
+
+        public String phrase() {
+            return phrase.toString();
+        }
+
+        public static Say say(String word) {
+            return new Say(word);
+        }
+    }
 
     // Write your line count function here
 }
