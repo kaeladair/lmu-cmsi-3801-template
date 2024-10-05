@@ -21,8 +21,15 @@ public class Exercises {
     }
 
     // Write your first then lower case function here
+    static Optional<String> firstThenLowerCase(List<String> strings, Predicate<String> predicate) {
+        return strings.stream()
+            .filter(predicate)
+            .findFirst()
+            .map(String::toLowerCase);
+    }
 
     // Write your say function here
+    
 
     // Write your line count function here
 }
