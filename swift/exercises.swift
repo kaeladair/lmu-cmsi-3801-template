@@ -46,11 +46,16 @@ func say(_ word: String = "") -> Say {
 }
 
 // Write your meaningfulLineCount function here
-func meaningfulLineCount(_ filename: String) async throws -> Int {
-    let fileURL = URL(fileURLWithPath: filename)
-    let contents = try String(contentsOf: fileURL, encoding: .utf8)
-    let lines = contents.components(separatedBy: .newlines)
-    return lines.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty && !$0.trimmingCharacters(in: .whitespaces).hasPrefix("#") }.count
+func meaningfulLineCount(_ filename: String) async -> Result<Int, Error> {
+    do {
+        let fileURL = URL(fileURLWithPath: filename)
+        let contents = try String(contentsOf: fileURL, encoding: .utf8)
+        let lines = contents.components(separatedBy: .newlines)
+        let count = lines.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty && !$0.trimmingCharacters(in: .whitespaces).hasPrefix("#") }.count
+        return .success(count)
+    } catch {
+        return .failure(error)
+    }
 }
 
 // Write your Quaternion struct here
@@ -60,12 +65,12 @@ struct Quaternion: Equatable {
     let c: Double
     let d: Double
 
-    static let ZERO = Quaternion(0, 0, 0, 0)
-    static let I = Quaternion(0, 1, 0, 0)
-    static let J = Quaternion(0, 0, 1, 0)
-    static let K = Quaternion(0, 0, 0, 1)
+    static let ZERO = Quaternion(a: 0, b: 0, c: 0, d: 0)
+    static let I = Quaternion(a: 0, b: 1, c: 0, d: 0)
+    static let J = Quaternion(a: 0, b: 0, c: 1, d: 0)
+    static let K = Quaternion(a: 0, b: 0, c: 0, d: 1)
 
-    init(_ a: Double, _ b: Double, _ c: Double, _ d: Double) {
+    init(a: Double = 0, b: Double = 0, c: Double = 0, d: Double = 0) {
         guard !a.isNaN && !b.isNaN && !c.isNaN && !d.isNaN else {
             fatalError("Coefficients cannot be NaN")
         }
@@ -78,19 +83,19 @@ struct Quaternion: Equatable {
     var coefficients: [Double] { [a, b, c, d] }
 
     var conjugate: Quaternion {
-        Quaternion(a, -b, -c, -d)
+        Quaternion(a: a, b: -b, c: -c, d: -d)
     }
 
     static func + (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
-        Quaternion(lhs.a + rhs.a, lhs.b + rhs.b, lhs.c + rhs.c, lhs.d + rhs.d)
+        Quaternion(a: lhs.a + rhs.a, b: lhs.b + rhs.b, c: lhs.c + rhs.c, d: lhs.d + rhs.d)
     }
 
     static func * (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
         Quaternion(
-            lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d,
-            lhs.a * rhs.b + lhs.b * rhs.a + lhs.c * rhs.d - lhs.d * rhs.c,
-            lhs.a * rhs.c - lhs.b * rhs.d + lhs.c * rhs.a + lhs.d * rhs.b,
-            lhs.a * rhs.d + lhs.b * rhs.c - lhs.c * rhs.b + lhs.d * rhs.a
+            a: lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d,
+            b: lhs.a * rhs.b + lhs.b * rhs.a + lhs.c * rhs.d - lhs.d * rhs.c,
+            c: lhs.a * rhs.c - lhs.b * rhs.d + lhs.c * rhs.a + lhs.d * rhs.b,
+            d: lhs.a * rhs.d + lhs.b * rhs.c - lhs.c * rhs.b + lhs.d * rhs.a
         )
     }
 }
