@@ -24,6 +24,13 @@ export function firstThenApply<T, U>(
 }
 
 // Write your powers generator here
+export function* powersGenerator(base: bigint): Generator<bigint> {
+  let power: bigint = 1n
+  while (true) {
+    yield power
+    power *= base
+  }
+}
 
 // Write your line count function here
 
