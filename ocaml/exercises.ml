@@ -24,7 +24,24 @@ let powers_generator base =
   in
   aux 1
 
-(* Write your line count function here *)
+open Printf
+open Sys
+
+let meaningful_line_count filename =
+  let ic = open_in filename in
+  let rec count_lines acc =
+    try
+      let line = input_line ic in
+      let trimmed_line = String.trim line in
+      if trimmed_line <> "" && not (String.starts_with ~prefix:"#" trimmed_line) then
+        count_lines (acc + 1)
+      else
+        count_lines acc
+    with End_of_file ->
+      close_in ic;
+      acc
+  in
+  count_lines 0
 
 (* Write your shape type and associated functions here *)
 

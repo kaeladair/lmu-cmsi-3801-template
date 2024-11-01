@@ -60,12 +60,12 @@ let g3 = powers_generator 3 in (
   expect_equal_lists (Seq.take 0 g3 |> List.of_seq) []
 );;
 
-(*
-
 suite "meaningful_line_count";;
 try (meaningful_line_count("no-such-file.txt") |> fun _ -> expect false) with
   | Sys_error _ -> expect true;;
 expect(meaningful_line_count("../test-for-line-count.txt") == 5);;
+
+(*
 
 suite "shape";;
 let s1 = Sphere 5.0 in
