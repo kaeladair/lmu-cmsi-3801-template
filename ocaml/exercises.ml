@@ -57,4 +57,43 @@ let surface_area s =
   | Sphere r -> 4.0 *. Float.pi *. r ** 2.0
   | Box (w, l, d) -> 2.0 *. (w *. l +. w *. d +. l *. d)
 
-(* Write your binary search tree implementation here *)
+type 'a bst =
+  | Empty
+  | Node of 'a * 'a bst * 'a bst
+
+let rec size tree =
+  match tree with
+  | Empty -> 0
+  | Node (_, left, right) -> 1 + size left + size right
+
+let rec contains x tree =
+  match tree with
+  | Empty -> false
+  | Node (v, left, right) ->
+      if x = v then true
+      else if x < v then contains x left
+      else contains x right
+
+let rec insert x tree =
+  match tree with
+  | Empty -> Node (x, Empty, Empty)
+  | Node (v, left, right) ->
+      if x = v then tree
+      else if x < v then Node (v, insert x left, right)
+      else Node (v, left, insert x right)
+
+let rec inorder tree =
+  match tree with
+  | Empty -> []
+  | Node (v, left, right) -> inorder left @ [v] @ inorder right
+
+let rec to_string tree =
+  match tree with
+  | Empty -> "()"
+  | Node (v, left, right) ->
+      let left_str = to_string left in
+      let right_str = to_string right in
+      if left_str = "()" && right_str = "()" then
+        Printf.sprintf "(%s)" (string_of_int v)
+      else
+        Printf.sprintf "(%s%s%s)" left_str (string_of_int v) right_str
