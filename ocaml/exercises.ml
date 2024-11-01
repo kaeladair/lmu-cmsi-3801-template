@@ -12,7 +12,11 @@ let change amount =
     in
     aux amount denominations
 
-(* Write your first then apply function here *)
+let first_then_apply lst predicate transform =
+  try
+    let first = List.find predicate lst in
+    transform first
+  with Not_found -> None
 
 (* Write your powers generator here *)
 
