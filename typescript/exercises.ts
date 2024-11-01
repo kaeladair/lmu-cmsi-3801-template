@@ -79,3 +79,75 @@ export function surfaceArea(shape: Shape): number {
 }
 
 // Write your binary search tree implementation here
+export class Empty<T> implements BinarySearchTree<T> {
+  size(): number {
+    return 0
+  }
+
+  contains(_value: T): boolean {
+    return false
+  }
+
+  insert(value: T): BinarySearchTree<T> {
+    return new Node(value, new Empty(), new Empty())
+  }
+
+  *inorder(): Generator<T> {
+    // Empty generator - yields nothing
+  }
+
+  toString(): string {
+    return "()"
+  }
+}
+
+class Node<T> implements BinarySearchTree<T> {
+  constructor(
+    private readonly value: T,
+    private readonly left: BinarySearchTree<T>,
+    private readonly right: BinarySearchTree<T>
+  ) {}
+
+  size(): number {
+    return 1 + this.left.size() + this.right.size()
+  }
+
+  contains(value: T): boolean {
+    if (value === this.value) return true
+    if (value < this.value) return this.left.contains(value)
+    return this.right.contains(value)
+  }
+
+  insert(value: T): BinarySearchTree<T> {
+    if (value === this.value) return this
+    if (value < this.value) {
+      return new Node(this.value, this.left.insert(value), this.right)
+    }
+    return new Node(this.value, this.left, this.right.insert(value))
+  }
+
+  *inorder(): Generator<T> {
+    yield* this.left.inorder()
+    yield this.value
+    yield* this.right.inorder()
+  }
+
+  toString(): string {
+    const leftStr = this.left.toString()
+    const rightStr = this.right.toString()
+    if (leftStr === "()" && rightStr === "()") {
+      return `(${this.value})`
+    }
+    const left = leftStr === "()" ? "" : leftStr
+    const right = rightStr === "()" ? "" : rightStr
+    return `(${left}${this.value}${right})`
+  }
+}
+
+export interface BinarySearchTree<T> {
+  size(): number
+  contains(value: T): boolean
+  insert(value: T): BinarySearchTree<T>
+  inorder(): Generator<T>
+  toString(): string
+}
