@@ -14,6 +14,14 @@ export function change(amount: bigint): Map<bigint, bigint> {
 }
 
 // Write your first then apply function here
+export function firstThenApply<T, U>(
+  arr: T[],
+  predicate: (x: T) => boolean,
+  transform: (x: T) => U
+): U | undefined {
+  const found = arr.find(predicate)
+  return found === undefined ? undefined : transform(found)
+}
 
 // Write your powers generator here
 
