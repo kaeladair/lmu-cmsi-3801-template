@@ -33,6 +33,23 @@ export function* powersGenerator(base: bigint): Generator<bigint> {
 }
 
 // Write your line count function here
+export async function meaningfulLineCount(filename: string): Promise<number> {
+  try {
+    const file = await open(filename)
+    let count = 0
+    
+    for await (const line of file.readLines()) {
+      const trimmedLine = line.trim()
+      if (trimmedLine && !trimmedLine.startsWith('#')) {
+        count++
+      }
+    }
+    
+    return count
+  } catch (error: any) {
+    throw new Error(`Error reading file: ${error.message}`)
+  }
+}
 
 // Write your shape type and associated functions here
 
