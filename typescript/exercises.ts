@@ -52,5 +52,30 @@ export async function meaningfulLineCount(filename: string): Promise<number> {
 }
 
 // Write your shape type and associated functions here
+export type Shape = 
+  | { kind: "Sphere"; radius: number }
+  | { kind: "Box"; width: number; length: number; depth: number }
+
+export function volume(shape: Shape): number {
+  switch (shape.kind) {
+    case "Sphere":
+      return (4/3) * Math.PI * Math.pow(shape.radius, 3)
+    case "Box":
+      return shape.width * shape.length * shape.depth
+  }
+}
+
+export function surfaceArea(shape: Shape): number {
+  switch (shape.kind) {
+    case "Sphere":
+      return 4 * Math.PI * Math.pow(shape.radius, 2)
+    case "Box":
+      return 2 * (
+        shape.width * shape.length +
+        shape.width * shape.depth +
+        shape.length * shape.depth
+      )
+  }
+}
 
 // Write your binary search tree implementation here
