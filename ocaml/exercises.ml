@@ -43,6 +43,18 @@ let meaningful_line_count filename =
   in
   count_lines 0
 
-(* Write your shape type and associated functions here *)
+type shape =
+  | Sphere of float
+  | Box of float * float * float
+
+let volume s =
+  match s with
+  | Sphere r -> (4.0 /. 3.0) *. Float.pi *. r ** 3.0
+  | Box (w, l, d) -> w *. l *. d
+
+let surface_area s =
+  match s with
+  | Sphere r -> 4.0 *. Float.pi *. r ** 2.0
+  | Box (w, l, d) -> 2.0 *. (w *. l +. w *. d +. l *. d)
 
 (* Write your binary search tree implementation here *)
