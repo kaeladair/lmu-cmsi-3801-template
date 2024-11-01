@@ -44,7 +44,6 @@ expect (first_then_apply ["ABC"; "ABCD"; "ABCDE"] length_greater_than_3 lower = 
 expect (first_then_apply [1; 2; 3] (fun n -> n > 1) square = Some 4);;
 expect (first_then_apply [1; 2; 3] (fun n -> n > 3) square = None);;
 
-(*
 suite "powers_generator";;
 let g1 = powers_generator 1 in (
   expect_equal_lists (Seq.take 3 g1 |> List.of_seq) [1; 1; 1];
@@ -60,6 +59,8 @@ let g3 = powers_generator 3 in (
   expect_equal_lists (Seq.take 3 g3 |> List.of_seq) [1; 3; 9];
   expect_equal_lists (Seq.take 0 g3 |> List.of_seq) []
 );;
+
+(*
 
 suite "meaningful_line_count";;
 try (meaningful_line_count("no-such-file.txt") |> fun _ -> expect false) with

@@ -18,7 +18,11 @@ let first_then_apply lst predicate transform =
     transform first
   with Not_found -> None
 
-(* Write your powers generator here *)
+let powers_generator base =
+  let rec aux n () =
+    Seq.Cons (n, aux (n * base))
+  in
+  aux 1
 
 (* Write your line count function here *)
 
