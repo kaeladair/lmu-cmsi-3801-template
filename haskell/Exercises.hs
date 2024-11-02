@@ -1,6 +1,7 @@
 module Exercises
     ( change,
       firstThenApply,
+      powers,
       -- put the proper exports here
     ) where
 
@@ -23,6 +24,9 @@ change amount
 
 firstThenApply :: [a] -> (a -> Bool) -> (a -> b) -> Maybe b
 firstThenApply xs p f = f <$> find p xs
+
+powers :: Integral a => a -> [a]
+powers base = iterate (base *) 1
 
 -- Write your infinite powers generator here
 
