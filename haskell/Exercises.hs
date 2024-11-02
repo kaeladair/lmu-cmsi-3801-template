@@ -1,5 +1,6 @@
 module Exercises
     ( change,
+      firstThenApply,
       -- put the proper exports here
     ) where
 
@@ -20,7 +21,8 @@ change amount
                 (count, newRemaining) = remaining `divMod` d
                 newCounts = Map.insert d count counts
 
--- Write your first then apply function here
+firstThenApply :: [a] -> (a -> Bool) -> (a -> b) -> Maybe b
+firstThenApply xs p f = f <$> find p xs
 
 -- Write your infinite powers generator here
 

@@ -22,14 +22,14 @@ fixture =
     , ( "change 100000000037", test_change 100000000037 (4000000001, 1, 0, 2) )
     , ( "change 10000000000005", test_change 10000000000005 (400000000000, 0, 1, 0) )
     -- Uncomment the following lines as you implement the functions
-    -- , ( "firstThenApply empty list", (firstThenApply [] (/= "") lower) == Nothing )
-    -- , ( "firstThenApply lowercase ok", (firstThenApply ["", "A", "B"] (/= "") lower) == Just "a" )
-    -- , ( "firstThenApply lengthOver3 no match"
-    --   , (firstThenApply ["", "A", "ABC"] lengthOverThree lower == Nothing ))
-    -- , ( "firstThenApply lengthOver3 match"
-    --   , (firstThenApply ["ABC", "ABCD", "ABCDE"] lengthOverThree lower == Just "abcd" ))
-    -- , ( "firstThenApply square no match", (firstThenApply [1, 2, 3] (> 3) (^ 2) == Nothing ))
-    -- , ( "firstThenApply square match", (firstThenApply [1, 2, 3] (> 1) (^ 2) == Just 4 ))
+    , ( "firstThenApply empty list", (firstThenApply [] (/= "") lower) == Nothing )
+    , ( "firstThenApply lowercase ok", (firstThenApply ["", "A", "B"] (/= "") lower) == Just "a" )
+    , ( "firstThenApply lengthOver3 no match"
+      , (firstThenApply ["", "A", "ABC"] lengthOverThree lower == Nothing ))
+    , ( "firstThenApply lengthOver3 match"
+      , (firstThenApply ["ABC", "ABCD", "ABCDE"] lengthOverThree lower == Just "abcd" ))
+    , ( "firstThenApply square no match", (firstThenApply [1, 2, 3] (> 3) (^ 2) == Nothing ))
+    , ( "firstThenApply square match", (firstThenApply [1, 2, 3] (> 1) (^ 2) == Just 4 ))
     -- , ( "powers of 2", take 10 (powers 2) == [1,2,4,8,16,32,64,128,256,512])
     -- , ( "powers of 3", take 5 (powers 3) == [1,3,9,27,81])
     -- , ( "powers of 1000000", (powers (1000000::Integer) !! 30) == 10^180)
@@ -58,8 +58,8 @@ fixture =
     ]
     -- Uncomment the following as needed as you implement your tests
     where
-        -- lower = unpack . toLower . pack
-        -- lengthOverThree = (> 3) . length
+        lower = unpack . toLower . pack
+        lengthOverThree = (> 3) . length
         -- x `is_approx` y = abs (x - y) < 0.0000001
         -- g = insert "G" Empty
         -- gb = insert "B" g
