@@ -2,6 +2,7 @@ module Exercises
     ( change,
       firstThenApply,
       powers,
+      meaningfulLineCount,
       -- put the proper exports here
     ) where
 
@@ -28,9 +29,14 @@ firstThenApply xs p f = f <$> find p xs
 powers :: Integral a => a -> [a]
 powers base = iterate (base *) 1
 
--- Write your infinite powers generator here
-
--- Write your line count function here
+meaningfulLineCount :: FilePath -> IO Int
+meaningfulLineCount filename = do
+    contents <- readFile filename
+    return $ length $ filter isNotCommentOrEmpty $ lines contents
+    where
+        isNotCommentOrEmpty line = 
+            let trimmed = dropWhile isSpace line
+            in not (null trimmed) && head trimmed /= '#'
 
 -- Write your shape data type here
 
