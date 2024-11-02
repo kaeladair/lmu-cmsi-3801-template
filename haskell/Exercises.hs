@@ -45,7 +45,6 @@ meaningfulLineCount filename = do
             let trimmed = dropWhile isSpace line
             in not (null trimmed) && head trimmed /= '#'
 
--- Write your shape data type here
 data Shape = Sphere Double | Box Double Double Double
     deriving (Show, Eq)
 
@@ -57,7 +56,6 @@ surfaceArea :: Shape -> Double
 surfaceArea (Sphere r) = 4 * pi * r^2
 surfaceArea (Box w l d) = 2 * (w*l + w*d + l*d)
 
--- Write your binary search tree algebraic type here
 data BST a = Empty | Node a (BST a) (BST a)
     deriving (Eq)
 
