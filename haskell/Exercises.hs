@@ -3,6 +3,9 @@ module Exercises
       firstThenApply,
       powers,
       meaningfulLineCount,
+      Shape(..),
+      volume,
+      surfaceArea,
       -- put the proper exports here
     ) where
 
@@ -39,5 +42,15 @@ meaningfulLineCount filename = do
             in not (null trimmed) && head trimmed /= '#'
 
 -- Write your shape data type here
+data Shape = Sphere Double | Box Double Double Double
+    deriving (Show, Eq)
+
+volume :: Shape -> Double
+volume (Sphere r) = (4/3) * pi * r^3
+volume (Box w l d) = w * l * d
+
+surfaceArea :: Shape -> Double
+surfaceArea (Sphere r) = 4 * pi * r^2
+surfaceArea (Box w l d) = 2 * (w*l + w*d + l*d)
 
 -- Write your binary search tree algebraic type here
