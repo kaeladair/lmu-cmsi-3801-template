@@ -6,7 +6,11 @@ module Exercises
       Shape(..),
       volume,
       surfaceArea,
-      -- put the proper exports here
+      BST(Empty),
+      size,
+      contains,
+      insert,
+      inorder
     ) where
 
 import qualified Data.Map as Map
@@ -54,3 +58,35 @@ surfaceArea (Sphere r) = 4 * pi * r^2
 surfaceArea (Box w l d) = 2 * (w*l + w*d + l*d)
 
 -- Write your binary search tree algebraic type here
+data BST a = Empty | Node a (BST a) (BST a)
+    deriving (Eq)
+
+instance (Show a, Eq a) => Show (BST a) where
+    show Empty = "()"
+    show (Node v Empty Empty) = "(" ++ show v ++ ")"
+    show (Node v l r) = "(" ++ leftStr ++ show v ++ rightStr ++ ")"
+        where
+            leftStr = if l == Empty then "" else show l
+            rightStr = if r == Empty then "" else show r
+
+size :: BST a -> Int
+size Empty = 0
+size (Node _ l r) = 1 + size l + size r
+
+contains :: Ord a => a -> BST a -> Bool
+contains _ Empty = False
+contains x (Node v l r)
+    | x == v = True
+    | x < v = contains x l
+    | otherwise = contains x r
+
+insert :: Ord a => a -> BST a -> BST a
+insert x Empty = Node x Empty Empty
+insert x t@(Node v l r)
+    | x == v = t
+    | x < v = Node v (insert x l) r
+    | otherwise = Node v l (insert x r)
+
+inorder :: BST a -> [a]
+inorder Empty = []
+inorder (Node v l r) = inorder l ++ [v] ++ inorder r
